@@ -1,30 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    >
+    android:padding="12dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_travel_head"
-        android:textSize="34sp"
+        android:text="Мои поездки"
         android:textStyle="bold"
+        android:textSize="22sp"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@drawable/cornergrey"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить поездку"/>
+
+        <EditText
+            android:id="@+id/trip_title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название"/>
+
+        <EditText
+            android:id="@+id/trip_location_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Локация"/>
+
+        <EditText
+            android:id="@+id/trip_desc_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Описание"/>
+
+        <EditText
+            android:id="@+id/trip_image_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ссылка на изображение"/>
+
+        <Button
+            android:id="@+id/add_trip_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Сохранить"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycle"
-        android:layout_marginTop="10dp"
-        />
+        android:id="@+id/trip_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"/>
 
-
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>
