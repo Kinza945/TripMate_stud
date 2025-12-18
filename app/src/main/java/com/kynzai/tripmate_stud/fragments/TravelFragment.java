@@ -43,12 +43,6 @@ public class TravelFragment extends Fragment implements TripAdapter.TripInteract
         binding.tripList.setAdapter(adapter);
 
         tripViewModel.getTrips().observe(getViewLifecycleOwner(), adapter::submit);
-        authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
-            boolean signedIn = user != null;
-            adapter.setActionsEnabled(signedIn);
-            binding.addTripCard.setVisibility(signedIn ? View.VISIBLE : View.GONE);
-            binding.guestHint.setVisibility(signedIn ? View.GONE : View.VISIBLE);
-        });
 
         binding.addTripButton.setOnClickListener(v -> {
             if (authViewModel.getCurrentUser().getValue() == null) {

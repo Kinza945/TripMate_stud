@@ -1,120 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Мои поездки"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/spacing_m">
+        android:padding="8dp"
+        android:background="@drawable/cornergrey"
+        android:layout_marginTop="8dp">
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить поездку"/>
+
+        <EditText
+            android:id="@+id/trip_title_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Мои поездки"
-            style="@style/Text.Title"
-            android:gravity="start" />
+            android:hint="Название"/>
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/add_trip_card"
+        <EditText
+            android:id="@+id/trip_location_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_s"
-            app:cardBackgroundColor="@color/surface"
-            app:cardCornerRadius="@dimen/card_corner"
-            app:cardElevation="@dimen/card_elevation">
+            android:hint="Локация"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/spacing_m">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Добавить поездку"
-                    android:textAppearance="@style/Text.Body"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Название">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_title_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Локация">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_location_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Описание">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_desc_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Ссылка на изображение">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_image_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/add_trip_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_s"
-                    android:backgroundTint="@color/primary"
-                    android:text="Сохранить"
-                    android:textColor="@color/onPrimary" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/guest_hint"
+        <EditText
+            android:id="@+id/trip_desc_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_s"
-            android:text="Войдите, чтобы добавлять поездки и управлять избранным."
-            android:textAppearance="@style/Text.Body"
-            android:textColor="@color/onSurfaceVariant"
-            android:visibility="gone" />
+            android:hint="Описание"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trip_list"
+        <EditText
+            android:id="@+id/trip_image_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_m"
-            android:clipToPadding="false"
-            android:paddingBottom="@dimen/spacing_m" />
+            android:hint="Ссылка на изображение"/>
 
+        <Button
+            android:id="@+id/add_trip_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Сохранить"/>
     </LinearLayout>
-</ScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trip_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

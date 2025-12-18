@@ -18,7 +18,7 @@ public class TripViewModel extends AndroidViewModel {
 
     public TripViewModel(@NonNull Application application) {
         super(application);
-        repository = new TripRepositoryImpl();
+        repository = new TripRepositoryImpl(application.getApplicationContext());
     }
 
     public LiveData<List<Trip>> getTrips() {

@@ -3,22 +3,33 @@ package com.kynzai.tripmate_stud.domain.model;
 import java.io.Serializable;
 
 public class Country implements Serializable {
-    private final String id;
-    private final String name;
-    private final String description;
-    private final String imageUrl;
-    private final String capital;
-    private final String currency;
-    private final String temperature;
 
-    public Country(String id, String name, String description, String imageUrl, String capital, String currency, String temperature) {
+    private String id;
+    private String name;
+    private String capital;
+    private String description;
+    private String currency;
+    private String temperature;
+    private String imageUrl;
+
+    // Пустой конструктор нужен для сериализации
+    public Country() {
+    }
+
+    public Country(String id,
+                   String name,
+                   String capital,
+                   String description,
+                   String currency,
+                   String temperature,
+                   String imageUrl) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.imageUrl = imageUrl;
         this.capital = capital;
+        this.description = description;
         this.currency = currency;
         this.temperature = temperature;
+        this.imageUrl = imageUrl;
     }
 
     public String getId() {
@@ -29,16 +40,12 @@ public class Country implements Serializable {
         return name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
     public String getCapital() {
         return capital;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getCurrency() {
@@ -47,5 +54,9 @@ public class Country implements Serializable {
 
     public String getTemperature() {
         return temperature;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

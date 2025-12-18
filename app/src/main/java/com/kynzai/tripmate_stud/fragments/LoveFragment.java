@@ -13,14 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.kynzai.tripmate_stud.databinding.FragmentLoveBinding;
 import com.kynzai.tripmate_stud.presentation.adapter.TripAdapter;
-import com.kynzai.tripmate_stud.presentation.viewmodel.AuthViewModel;
 import com.kynzai.tripmate_stud.presentation.viewmodel.TripViewModel;
 
 public class LoveFragment extends Fragment implements TripAdapter.TripInteractionListener {
 
     private FragmentLoveBinding binding;
     private TripViewModel tripViewModel;
-    private AuthViewModel authViewModel;
     private TripAdapter adapter;
 
     @Nullable
@@ -34,17 +32,11 @@ public class LoveFragment extends Fragment implements TripAdapter.TripInteractio
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
-        authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
         adapter = new TripAdapter(this);
         binding.favoriteList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.favoriteList.setAdapter(adapter);
 
         tripViewModel.getFavoriteTrips().observe(getViewLifecycleOwner(), adapter::submit);
-        authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
-            boolean signedIn = user != null;
-            adapter.setActionsEnabled(signedIn);
-            binding.guestHint.setVisibility(signedIn ? View.GONE : View.VISIBLE);
-        });
     }
 
     @Override

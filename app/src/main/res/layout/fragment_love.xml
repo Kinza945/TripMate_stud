@@ -3,32 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background"
-    android:padding="@dimen/spacing_m">
+    android:padding="12dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Любимые поездки"
-        style="@style/Text.Title"
-        android:gravity="start"/>
-
-    <TextView
-        android:id="@+id/guest_hint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:text="Войдите, чтобы видеть список избранного."
-        android:textAppearance="@style/Text.Body"
-        android:textColor="@color/onSurfaceVariant"
-        android:visibility="gone" />
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorite_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="@dimen/spacing_s"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/spacing_m"/>
+        android:layout_marginTop="12dp"/>
 </LinearLayout>

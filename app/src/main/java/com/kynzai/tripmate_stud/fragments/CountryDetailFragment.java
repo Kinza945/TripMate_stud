@@ -8,17 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.kynzai.tripmate_stud.databinding.FragmentCountryDetailBinding;
 import com.kynzai.tripmate_stud.domain.model.Country;
-import com.kynzai.tripmate_stud.presentation.viewmodel.CountryViewModel;
 
 public class CountryDetailFragment extends Fragment {
 
     private FragmentCountryDetailBinding binding;
-    private CountryViewModel countryViewModel;
 
     @Nullable
     @Override
@@ -30,21 +27,12 @@ public class CountryDetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        countryViewModel = new ViewModelProvider(requireActivity()).get(CountryViewModel.class);
         if (getArguments() != null) {
             Country country = (Country) getArguments().getSerializable("country");
             if (country != null) {
                 bindCountry(country);
             }
         }
-        countryViewModel.getCurrencyInfo().observe(getViewLifecycleOwner(), info -> {
-            if (info == null) {
-                binding.detailRateValue.setText("—");
-            } else {
-                String text = info.getBase() + " → " + info.getTarget() + ": " + info.getRate();
-                binding.detailRateValue.setText(text);
-            }
-        });
     }
 
     private void bindCountry(@NonNull Country country) {
@@ -56,12 +44,7 @@ public class CountryDetailFragment extends Fragment {
         binding.detailDescription.setText(country.getDescription());
         binding.detailCapital.setText(country.getCapital());
         binding.detailCurrency.setText(country.getCurrency());
-        String weatherValue = formatTemperature(country.getTemperature());
-        binding.detailTemperature.setText(weatherValue);
-        binding.detailWeatherValue.setText(weatherValue);
-        if (binding.detailRateValue.getText() == null || binding.detailRateValue.getText().length() == 0) {
-            binding.detailRateValue.setText("—");
-        }
+        binding.detailTemperature.setText(formatTemperature(country.getTemperature()));
     }
 
     private String formatTemperature(String value) {

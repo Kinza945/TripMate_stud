@@ -12,8 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.kynzai.tripmate_stud.MainActivity;
-import com.kynzai.tripmate_stud.R;
 import com.kynzai.tripmate_stud.databinding.FragmentprofileBinding;
 import com.kynzai.tripmate_stud.presentation.viewmodel.AuthViewModel;
 
@@ -37,11 +35,6 @@ public class ProfileFragment extends Fragment {
         binding.loginButton.setOnClickListener(v -> performAuth(false));
         binding.registerButton.setOnClickListener(v -> performAuth(true));
         binding.logoutButton.setOnClickListener(v -> authViewModel.logout());
-        binding.myTripsButton.setOnClickListener(v -> {
-            if (requireActivity() instanceof MainActivity) {
-                ((MainActivity) requireActivity()).selectTab(R.id.travel);
-            }
-        });
 
         authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) {

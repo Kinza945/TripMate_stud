@@ -18,19 +18,10 @@ import java.util.List;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryHolder> {
 
-    public interface CountryClickListener {
-        void onCountryClicked(Country country);
-    }
-
     private List<Country> countries = new ArrayList<>();
-    private final CountryClickListener listener;
-
-    public CountryAdapter(CountryClickListener listener) {
-        this.listener = listener;
-    }
 
     public void submit(List<Country> items) {
-        countries = items == null ? new ArrayList<>() : items;
+        countries = items;
         notifyDataSetChanged();
     }
 
@@ -46,12 +37,8 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
         Country country = countries.get(position);
         holder.title.setText(country.getName());
         holder.subtitle.setText(country.getDescription());
-        holder.capital.setText("Столица: " + country.getCapital());
-        Glide.with(holder.image.getContext())
-                .load(country.getImageUrl())
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(holder.image);
-        holder.itemView.setOnClickListener(v -> listener.onCountryClicked(country));
+        holder.capital.setText(country.getCapital());
+        Glide.with(holder.image.getContext()).load(country.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(holder.image);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class AuthViewModel extends AndroidViewModel {
 
     public AuthViewModel(@NonNull Application application) {
         super(application);
-        repository = new AuthRepositoryImpl();
+        repository = new AuthRepositoryImpl(application.getApplicationContext());
     }
 
     public LiveData<UserProfile> getCurrentUser() {

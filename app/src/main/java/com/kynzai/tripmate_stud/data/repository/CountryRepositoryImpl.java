@@ -11,7 +11,6 @@ import com.kynzai.tripmate_stud.domain.model.CurrencyInfo;
 import com.kynzai.tripmate_stud.domain.repository.CountryRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -21,16 +20,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import com.kynzai.tripmate_stud.data.remote.MockApiService;
 
 public class CountryRepositoryImpl implements CountryRepository {
 
-    private static final String MOCK_BASE_URL = "https://694461477dd335f4c3602a64.mockapi.io/TripMate_studapi/";
-
-    private final MutableLiveData<List<Country>> countries = new MutableLiveData<>(Collections.emptyList());
+    private final MutableLiveData<List<Country>> countries = new MutableLiveData<>();
     private final MutableLiveData<CurrencyInfo> currencyInfo = new MutableLiveData<>();
-    private final CurrencyApiService currencyService;
-    private final MockApiService mockApiService;
+    private final CurrencyApiService apiService;
 
     public CountryRepositoryImpl() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -39,54 +34,65 @@ public class CountryRepositoryImpl implements CountryRepository {
                 .addInterceptor(interceptor)
                 .build();
 
-        Retrofit mockRetrofit = new Retrofit.Builder()
-                .baseUrl(MOCK_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-        mockApiService = mockRetrofit.create(MockApiService.class);
-
-        Retrofit currencyRetrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://open.er-api.com/v6/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
-        currencyService = currencyRetrofit.create(CurrencyApiService.class);
-
+        apiService = retrofit.create(CurrencyApiService.class);
         loadCountries();
         fetchCurrency();
     }
 
     private void loadCountries() {
-        mockApiService.getCountries().enqueue(new Callback<List<MockApiService.CountryResponse>>() {
-            @Override
-            public void onResponse(Call<List<MockApiService.CountryResponse>> call, Response<List<MockApiService.CountryResponse>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Country> mapped = new ArrayList<>();
-                    for (MockApiService.CountryResponse item : response.body()) {
-                        mapped.add(new Country(
-                                item.id,
-                                safe(item.name),
-                                safe(item.description),
-                                safe(item.imageUrl),
-                                safe(item.capital),
-                                safe(item.currency),
-                                safe(item.temperature)
-                        ));
-                    }
-                    countries.postValue(mapped);
-                }
-            }
+        List<Country> countryList = new ArrayList<>();
 
-            @Override
-            public void onFailure(Call<List<MockApiService.CountryResponse>> call, Throwable t) {
-                Log.e("CountryRepository", "Country fetch failed", t);
-            }
-        });
+        countryList.add(new Country(
+                "ru",
+                "Россия",
+                "Москва",
+                "Красочные города, культурное наследие и незабываемые железнодорожные путешествия.",
+                "RUB",
+                "15",
+                "https://images.unsplash.com/photo-1546541612-7c5f70e571d4"
+        ));
+
+        countryList.add(new Country(
+                "es",
+                "Испания",
+                "Мадрид",
+                "Солнечные побережья, гастрономия и города Гауди.",
+                "EUR",
+                "22",
+                "https://images.unsplash.com/photo-1505761671935-60b3a7427bad"
+        ));
+
+        countryList.add(new Country(
+                "jp",
+                "Япония",
+                "Токио",
+                "Сочетание традиций и технологий, восхитительная кухня и культура уважения.",
+                "JPY",
+                "18",
+                "https://images.unsplash.com/photo-1505060055475-0858d9047f3f"
+        ));
+
+        countryList.add(new Country(
+                "br",
+                "Бразилия",
+                "Рио-де-Жанейро",
+                "Карнавалы, тропики и длинные пляжи для серфинга.",
+                "BRL",
+                "27",
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
+        ));
+
+        countries.setValue(countryList);
     }
 
+
     private void fetchCurrency() {
-        currencyService.getLatestRates("USD", "EUR,JPY").enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
+        apiService.getLatestRates("USD", "EUR,JPY").enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
             @Override
             public void onResponse(Call<CurrencyApiService.CurrencyResponse> call, Response<CurrencyApiService.CurrencyResponse> response) {
                 if (response.isSuccessful() && response.body() != null && response.body().rates != null) {
@@ -102,10 +108,6 @@ public class CountryRepositoryImpl implements CountryRepository {
                 Log.e("CountryRepository", "Currency fetch failed", t);
             }
         });
-    }
-
-    private String safe(String value) {
-        return value == null ? "" : value;
     }
 
     @Override

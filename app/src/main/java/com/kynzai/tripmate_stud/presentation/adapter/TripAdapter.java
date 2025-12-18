@@ -26,7 +26,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
 
     private List<Trip> trips = new ArrayList<>();
     private final TripInteractionListener listener;
-    private boolean actionsEnabled = true;
 
     public TripAdapter(TripInteractionListener listener) {
         this.listener = listener;
@@ -34,11 +33,6 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
 
     public void submit(List<Trip> items) {
         trips = items;
-        notifyDataSetChanged();
-    }
-
-    public void setActionsEnabled(boolean enabled) {
-        actionsEnabled = enabled;
         notifyDataSetChanged();
     }
 
@@ -58,12 +52,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         holder.favorite.setImageResource(trip.isFavorite() ? R.drawable.star_two : R.drawable.star_one);
         holder.favorite.setOnClickListener(v -> listener.onFavorite(trip.getId()));
         holder.remove.setOnClickListener(v -> listener.onRemove(trip.getId()));
-        holder.favorite.setVisibility(actionsEnabled ? View.VISIBLE : View.GONE);
-        holder.remove.setVisibility(actionsEnabled ? View.VISIBLE : View.GONE);
-        Glide.with(holder.image.getContext())
-                .load(trip.getImageUrl())
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(holder.image);
+        Glide.with(holder.image.getContext()).load(trip.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(holder.image);
     }
 
     @Override
