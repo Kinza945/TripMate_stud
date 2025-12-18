@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_s"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/cardMuted"
+    app:cardCornerRadius="@dimen/card_corner"
+    app:cardElevation="0dp"
+    app:useCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/spacing_s">
+
+        <ImageView
+            android:id="@+id/country_image"
+            android:layout_width="@dimen/image_country_size"
+            android:layout_height="@dimen/image_country_size"
+            android:contentDescription="@string/country_names"
+            android:background="@color/surface"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/spacing_s">
+
+            <TextView
+                android:id="@+id/country_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Text.Title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/country_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textAppearance="@style/Text.Body"
+                android:textColor="@color/onSurfaceVariant" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
