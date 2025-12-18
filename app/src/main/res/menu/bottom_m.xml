@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/country"
-        android:title="@string/country_names"
-        />
+        android:icon="@android:drawable/ic_menu_mapmode"
+        android:title="@string/country_names" />
 
     <item android:id="@+id/love"
-        android:title="@string/love_names"
-        />
+        android:icon="@android:drawable/btn_star_big_on"
+        android:title="@string/love_names" />
     <item android:id="@+id/travel"
-        android:title="@string/travel_names"
-        />
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="@string/travel_names" />
     <item android:id="@+id/profile"
-        android:title="@string/profile_names"
-        />
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/profile_names" />
 
 </menu>
