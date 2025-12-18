@@ -20,15 +20,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        app:menu="@menu/bottom_m"
-        app:itemTextAppearanceActive="@style/ActiveTextStyle"
-        app:itemTextAppearanceInactive="@style/InactiveTextStyle"
-        android:elevation="2dp"
-        app:itemIconSize="2dp"
-        app:itemPaddingTop="2dp"
-        app:itemPaddingBottom="1dp"
-        app:labelVisibilityMode="auto"/>
+        android:background="@color/surface"
+        android:elevation="4dp"
+        app:itemIconSize="24dp"
+        app:itemIconTint="@color/nav_item_tint"
+        app:itemTextColor="@color/nav_item_tint"
+        app:itemPaddingTop="6dp"
+        app:itemPaddingBottom="6dp"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_m" />
 
 
 <!--    style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"-->
