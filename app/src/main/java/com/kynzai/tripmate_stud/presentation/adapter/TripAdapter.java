@@ -52,10 +52,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         holder.favorite.setImageResource(trip.isFavorite() ? R.drawable.star_two : R.drawable.star_one);
         holder.favorite.setOnClickListener(v -> listener.onFavorite(trip.getId()));
         holder.remove.setOnClickListener(v -> listener.onRemove(trip.getId()));
-        Glide.with(holder.image.getContext())
-                .load(trip.getImageUrl())
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(holder.image);
+        Glide.with(holder.image.getContext()).load(trip.getImageUrl()).placeholder(R.drawable.ic_launcher_foreground).into(holder.image);
     }
 
     @Override

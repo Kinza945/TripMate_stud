@@ -4,30 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background"
-    android:padding="@dimen/spacing_m">
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/country_header"
-        style="@style/Text.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/country_names" />
+        android:text="Страны"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/currency_info"
-        style="@style/Text.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_xs"
-        android:text="Загрузка курса..." />
+        android:text="Загрузка курса USD/EUR..."
+        android:textColor="@color/purple_700"
+        android:layout_marginTop="6dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/country_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/spacing_s"
         android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/spacing_m" />
+        android:layout_marginTop="8dp"/>
 </LinearLayout>
