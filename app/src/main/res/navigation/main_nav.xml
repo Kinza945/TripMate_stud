@@ -9,7 +9,11 @@
         android:id="@+id/country"
         android:name="com.kynzai.tripmate_stud.fragments.CountryFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_country" />
+        tools:layout="@layout/fragment_country" >
+        <action
+            android:id="@+id/action_country_to_countryDetail"
+            app:destination="@id/countryDetail" />
+    </fragment>
 
     <fragment
         android:id="@+id/love"
@@ -28,4 +32,10 @@
         android:name="com.kynzai.tripmate_stud.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragmentprofile" />
+
+    <fragment
+        android:id="@+id/countryDetail"
+        android:name="com.kynzai.tripmate_stud.fragments.CountryDetailFragment"
+        android:label="CountryDetail"
+        tools:layout="@layout/fragment_country_detail" />
 </navigation>
