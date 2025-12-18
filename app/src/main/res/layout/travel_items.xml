@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="114dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/cornerrad"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_image"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cornergrey"
+            android:id="@+id/recomendatit"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="13dp"
+            android:text="@string/recomme"
+            android:gravity="center"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            />
+
+
+
+            <ImageButton
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:background="@drawable/cornergreytwo"
+                android:layout_marginTop="5dp"
+                android:foregroundGravity="center_vertical"
+                android:layout_marginEnd="20dp"
+
+                />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:orientation="horizontal"
+            >
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="vertical"
+            android:background="@drawable/cornergrey"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginBottom="2dp"
+            >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30, London River a edredddwskjejejjjejeje"
+                android:textStyle="italic"
+                android:layout_marginStart="10dp"
+                android:textSize="10sp"
+                android:id="@+id/text_reference" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                >
+              <ImageView
+                  android:layout_width="20dp"
+                  android:layout_height="20dp"
+                  android:src="@drawable/star"
+                  />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/stars_id"
+                    android:text="4.7"
+                    android:textStyle="normal"
+                    android:textSize="11sp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="3dp"
+                    />
+
+            </LinearLayout>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</FrameLayout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+   <fragment
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:id="@+id/fragment_container_view_tag"
+       app:navGraph="@navigation/main_nav"
+       android:name="androidx.navigation.fragment.NavHostFragment"
+       />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:menu="@menu/bottom_m"
+        app:itemTextAppearanceActive="@style/ActiveTextStyle"
+        app:itemTextAppearanceInactive="@style/InactiveTextStyle"
+        android:elevation="2dp"
+        app:itemIconSize="2dp"
+        app:itemPaddingTop="2dp"
+        app:itemPaddingBottom="1dp"
+        app:labelVisibilityMode="auto"/>
+
+
+<!--    style="@style/Widget.MaterialComponents.BottomNavigationView.PrimarySurface"-->
+
+
+    <!--    <com.google.android.material.bottomappbar.BottomAppBar-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/bottomAppBar"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        app:fabCradleMargin="2dp"-->
+<!--        app:fabCradleRoundedCornerRadius="20dp"-->
+<!--        >-->
+
+<!--&lt;!&ndash;        app:fabCradleMargin="10dp"&ndash;&gt;-->
+
+
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/bottom_navigation_view"-->
+<!--            android:layout_marginEnd="2dp"-->
+<!--            app:labelVisibilityMode="labeled"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            app:menu="@menu/bottom_m"-->
+
+<!--            />-->
+
+
+
+<!--    </com.google.android.material.bottomappbar.BottomAppBar>-->
+
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TripMate</string>
+    <string name="country_names">Страны</string>
+    <string name="love_names">Любимое</string>
+    <string name="travel_names">Поездки</string>
+    <string name="profile_names">Профиль</string>
+    <string name="text_travel_head">Поездки</string>
+    <string name="recomme">Рекомендуем</string>
+</resources>

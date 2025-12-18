@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/profile">
+
+    <fragment
+        android:id="@+id/country"
+        android:name="com.kynzai.tripmate_stud.fragments.CountryFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_country" />
+
+    <fragment
+        android:id="@+id/love"
+        android:name="com.kynzai.tripmate_stud.fragments.LoveFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_love" />
+
+    <fragment
+        android:id="@+id/travel"
+        android:name="com.kynzai.tripmate_stud.fragments.TravelFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_travel" />
+
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.kynzai.tripmate_stud.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragmentprofile" />
+</navigation>
