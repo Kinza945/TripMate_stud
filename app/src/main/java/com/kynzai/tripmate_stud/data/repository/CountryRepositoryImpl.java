@@ -46,12 +46,50 @@ public class CountryRepositoryImpl implements CountryRepository {
 
     private void loadCountries() {
         List<Country> countryList = new ArrayList<>();
-        countryList.add(new Country("ru", "Россия", "Красочные города, культурное наследие и незабываемые железнодорожные путешествия.", "https://images.unsplash.com/photo-1546541612-7c5f70e571d4", "Москва"));
-        countryList.add(new Country("es", "Испания", "Солнечные побережья, гастрономия и города Гауди.", "https://images.unsplash.com/photo-1505761671935-60b3a7427bad", "Мадрид"));
-        countryList.add(new Country("jp", "Япония", "Сочетание традиций и технологий, восхитительная кухня и культура уважения.", "https://images.unsplash.com/photo-1505060055475-0858d9047f3f", "Токио"));
-        countryList.add(new Country("br", "Бразилия", "Карнавалы, тропики и длинные пляжи для серфинга.", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", "Рио-де-Жанейро"));
+
+        countryList.add(new Country(
+                "ru",
+                "Россия",
+                "Москва",
+                "Красочные города, культурное наследие и незабываемые железнодорожные путешествия.",
+                "RUB",
+                "15",
+                "https://images.unsplash.com/photo-1546541612-7c5f70e571d4"
+        ));
+
+        countryList.add(new Country(
+                "es",
+                "Испания",
+                "Мадрид",
+                "Солнечные побережья, гастрономия и города Гауди.",
+                "EUR",
+                "22",
+                "https://images.unsplash.com/photo-1505761671935-60b3a7427bad"
+        ));
+
+        countryList.add(new Country(
+                "jp",
+                "Япония",
+                "Токио",
+                "Сочетание традиций и технологий, восхитительная кухня и культура уважения.",
+                "JPY",
+                "18",
+                "https://images.unsplash.com/photo-1505060055475-0858d9047f3f"
+        ));
+
+        countryList.add(new Country(
+                "br",
+                "Бразилия",
+                "Рио-де-Жанейро",
+                "Карнавалы, тропики и длинные пляжи для серфинга.",
+                "BRL",
+                "27",
+                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
+        ));
+
         countries.setValue(countryList);
     }
+
 
     private void fetchCurrency() {
         apiService.getLatestRates("USD", "EUR,JPY").enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
