@@ -1,27 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.TripMate" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.TripMate" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:colorBackground">@color/background</item>
     </style>
 
-    <style name="Theme.TripMate" parent="Base.Theme.TripMate" />
-
-    <style name="ActiveTextStyle" parent="TextAppearance.MaterialComponents.Caption">
-
-        <item name="android:textSize">16sp</item>
+    <style name="Text.Title">
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textSize">@dimen/text_title</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:color">@color/white</item>
-
     </style>
 
-
-    <style name="InactiveTextStyle" parent="TextAppearance.MaterialComponents.Caption">
-
-        <item name="android:textSize">10sp</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:color">@color/white</item>
-
+    <style name="Text.Body">
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textSize">@dimen/text_body</item>
     </style>
 
+    <style name="Text.Subtitle">
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:textSize">@dimen/text_subtitle</item>
+    </style>
+
+    <style name="Text.Caption">
+        <item name="android:textColor">@color/onSurfaceVariant</item>
+        <item name="android:textSize">@dimen/text_caption</item>
+    </style>
 </resources>
