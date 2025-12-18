@@ -6,4 +6,10 @@
     <string name="profile_names">Профиль</string>
     <string name="text_travel_head">Поездки</string>
     <string name="recomme">Рекомендуем</string>
+    <string name="add_trip">Добавить поездку</string>
+    <string name="add_to_favorite">Добавить в избранное</string>
+    <string name="country">Страна</string>
+    <string name="fill_all_fields">Заполните все поля</string>
+    <string name="trip_meta_format">%1$s • %2$s • рейтинг %3$.1f</string>
+    <string name="login_required">Доступно только после входа</string>
 </resources>

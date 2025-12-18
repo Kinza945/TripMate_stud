@@ -24,8 +24,30 @@
         tools:layout="@layout/fragment_travel" />
 
     <fragment
+        android:id="@+id/travelDetail"
+        android:name="com.kynzai.tripmate_stud.fragments.TravelDetailFragment"
+        android:label="fragment_travel_detail"
+        tools:layout="@layout/fragment_travel_detail" />
+
+    <fragment
         android:id="@+id/profile"
         android:name="com.kynzai.tripmate_stud.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragmentprofile" />
+
+    <fragment
+        android:id="@+id/countryDetail"
+        android:name="com.kynzai.tripmate_stud.fragments.CountryDetailFragment"
+        android:label="fragment_country_detail"
+        tools:layout="@layout/fragment_country_detail" />
+
+    <action
+        android:id="@+id/action_country_to_countryDetail"
+        app:destination="@id/countryDetail" />
+    <action
+        android:id="@+id/action_travel_to_travelDetail"
+        app:destination="@id/travelDetail" />
+    <action
+        android:id="@+id/action_love_to_travelDetail"
+        app:destination="@id/travelDetail" />
 </navigation>

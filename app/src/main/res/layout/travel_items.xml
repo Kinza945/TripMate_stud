@@ -12,7 +12,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_image"/>
+        android:id="@+id/main_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cornergrey"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -47,13 +49,14 @@
 
 
             <ImageButton
+                android:id="@+id/favorite_action"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:background="@drawable/cornergreytwo"
                 android:layout_marginTop="5dp"
                 android:foregroundGravity="center_vertical"
                 android:layout_marginEnd="20dp"
-
+                android:contentDescription="@string/add_to_favorite"
                 />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
