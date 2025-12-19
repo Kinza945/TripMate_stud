@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_s"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/cardMuted"
+    app:cardCornerRadius="@dimen/card_corner"
+    app:cardElevation="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_s">
+
+        <ImageButton
+            android:id="@+id/trip_favorite"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/surface"
+            android:contentDescription="@string/love_names"
+            android:padding="6dp"
+            android:src="@drawable/star_two"
+            android:tint="@color/primary" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/trip_content_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="@dimen/card_corner_small"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_s">
+
+                <ImageView
+                    android:id="@+id/trip_image"
+                    android:layout_width="@dimen/image_trip_size"
+                    android:layout_height="@dimen/image_trip_size"
+                    android:background="@color/divider"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/trip_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/Text.Subtitle"
+                        android:textStyle="bold"
+                        android:textColor="@color/onSurface" />
+
+                    <TextView
+                        android:id="@+id/trip_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="@style/Text.Caption"
+                        android:textColor="@color/onSurfaceVariant" />
+
+                    <TextView
+                        android:id="@+id/trip_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="★ 4.7"
+                        android:textAppearance="@style/Text.Caption"
+                        android:textColor="@color/onSurface" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <ImageButton
+            android:id="@+id/trip_remove"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/trip_content_card"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/travel_names"
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="@color/onSurfaceVariant" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
