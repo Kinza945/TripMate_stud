@@ -37,6 +37,26 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav);
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.fragment_container_view_tag);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!navController.popBackStack()) {
+                    finish();
+                }
+            }
+        });
 
+    }
+
+    public void selectTab(int itemId) {
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(itemId);
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.fragment_container_view_tag);
+        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 }
