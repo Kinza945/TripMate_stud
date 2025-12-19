@@ -37,6 +37,22 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav);
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.fragment_container_view_tag);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        bottomNavigationView.setOnItemReselectedListener(item -> {
+            int itemId = item.getItemId();
+            navController.popBackStack(itemId, false);
+        });
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            int destinationId = destination.getId();
+            int selectedItemId = destinationId;
+            if (destinationId == R.id.countryDetail) {
+                selectedItemId = R.id.country;
+            } else if (destinationId == R.id.addTrip || destinationId == R.id.editTrip) {
+                selectedItemId = R.id.travel;
+            }
+            if (bottomNavigationView.getSelectedItemId() != selectedItemId) {
+                bottomNavigationView.getMenu().findItem(selectedItemId).setChecked(true);
+            }
+        });
         getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
