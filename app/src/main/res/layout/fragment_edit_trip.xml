@@ -18,7 +18,7 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/profile_names"
-            android:src="@android:drawable/ic_media_previous"
+            android:src="@drawable/ic_arrow_back"
             android:tint="@color/onSurface" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="Редактировать поездку"
             style="@style/Text.Title"
-            android:gravity="start" />
+            android:gravity="center" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.kynzai.tripmate_stud.R;
+import androidx.core.content.ContextCompat;
 import com.kynzai.tripmate_stud.domain.model.Trip;
 
 import java.util.ArrayList;
@@ -61,7 +62,10 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         Trip trip = trips.get(position);
         holder.title.setText(trip.getTitle());
         holder.subtitle.setText(trip.getLocation());
-        holder.favorite.setImageResource(trip.isFavorite() ? R.drawable.star_two : R.drawable.star_one);
+        holder.favorite.setImageResource(trip.isFavorite() ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+        int favoriteTint = ContextCompat.getColor(holder.itemView.getContext(),
+                trip.isFavorite() ? R.color.onSurface : R.color.onSurfaceVariant);
+        holder.favorite.setColorFilter(favoriteTint);
         holder.favorite.setOnClickListener(v -> listener.onFavorite(trip.getId()));
         holder.remove.setOnClickListener(v -> listener.onRemove(trip.getId()));
         boolean canEdit = actionsEnabled && currentUserId != null && currentUserId.equals(trip.getOwnerUid());
@@ -69,6 +73,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         holder.remove.setVisibility(canEdit ? View.VISIBLE : View.GONE);
         holder.edit.setVisibility(canEdit ? View.VISIBLE : View.GONE);
         holder.edit.setOnClickListener(v -> listener.onEdit(trip));
+        boolean recommended = trip.getOwnerUid() == null || trip.getOwnerUid().isEmpty();
+        holder.recommended.setVisibility(recommended ? View.VISIBLE : View.GONE);
         Glide.with(holder.image.getContext())
                 .load(trip.getImageUrl())
                 .placeholder(R.drawable.ic_launcher_foreground)
@@ -84,6 +90,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         ImageView image;
         TextView title;
         TextView subtitle;
+        TextView recommended;
         ImageButton favorite;
         ImageButton remove;
         ImageButton edit;
@@ -93,6 +100,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
             image = itemView.findViewById(R.id.trip_image);
             title = itemView.findViewById(R.id.trip_title);
             subtitle = itemView.findViewById(R.id.trip_subtitle);
+            recommended = itemView.findViewById(R.id.trip_recommended);
             favorite = itemView.findViewById(R.id.trip_favorite);
             remove = itemView.findViewById(R.id.trip_remove);
             edit = itemView.findViewById(R.id.trip_edit);

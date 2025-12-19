@@ -24,8 +24,8 @@
             android:contentDescription="@string/love_names"
             android:elevation="4dp"
             android:padding="6dp"
-            android:src="@drawable/star_two"
-            android:tint="@color/primary" />
+            android:src="@drawable/ic_heart_outline"
+            android:tint="@color/onSurfaceVariant" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/trip_content_card"
@@ -65,11 +65,20 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/trip_recommended"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Рекомендовано издателем"
+                        android:textAppearance="@style/Text.Caption"
+                        android:textColor="@color/onSurfaceVariant"
+                        android:visibility="gone" />
+
+                    <TextView
                         android:id="@+id/trip_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:textAppearance="@style/Text.Subtitle"
-                        android:textStyle="bold"
                         android:textColor="@color/onSurface" />
 
                     <TextView

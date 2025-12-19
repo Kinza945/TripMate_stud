@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="Мои поездки"
             style="@style/Text.Title"
-            android:gravity="start" />
+            android:gravity="center" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/add_trip_card"

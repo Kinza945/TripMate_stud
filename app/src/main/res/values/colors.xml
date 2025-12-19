@@ -2,7 +2,7 @@
 <resources>
     <color name="background">#FAFAFA</color>
     <color name="surface">#FFFFFF</color>
-    <color name="primary">#2F80ED</color>
+    <color name="primary">#545454</color>
     <color name="onPrimary">#FFFFFF</color>
     <color name="onSurface">#1A1A1A</color>
     <color name="onSurfaceVariant">#666666</color>

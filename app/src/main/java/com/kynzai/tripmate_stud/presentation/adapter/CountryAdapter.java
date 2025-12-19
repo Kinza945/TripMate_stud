@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.kynzai.tripmate_stud.R;
+import androidx.core.content.ContextCompat;
 import com.kynzai.tripmate_stud.domain.model.Country;
 
 import java.util.ArrayList;
@@ -53,7 +54,11 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryH
         Country country = countries.get(position);
         holder.title.setText(country.getName());
         holder.subtitle.setText(country.getDescription());
-        holder.favorite.setImageResource(favoriteIds.contains(country.getId()) ? R.drawable.star_two : R.drawable.star_one);
+        boolean isFavorite = favoriteIds.contains(country.getId());
+        holder.favorite.setImageResource(isFavorite ? R.drawable.ic_heart_filled : R.drawable.ic_heart_outline);
+        int tint = ContextCompat.getColor(holder.itemView.getContext(),
+                isFavorite ? R.color.onSurface : R.color.onSurfaceVariant);
+        holder.favorite.setColorFilter(tint);
         Glide.with(holder.image.getContext())
                 .load(country.getImageUrl())
                 .placeholder(R.drawable.ic_launcher_foreground)
