@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/spacing_s"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="@color/cardMuted"
+    app:cardCornerRadius="@dimen/card_corner"
+    app:cardElevation="0dp"
+    app:useCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_s">
+
+        <FrameLayout
+            android:id="@+id/country_image_frame"
+            android:layout_width="@dimen/image_country_size"
+            android:layout_height="@dimen/image_country_size">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="@dimen/card_corner_small"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface">
+
+                <ImageView
+                    android:id="@+id/country_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/country_names"
+                    android:scaleType="centerCrop" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <ImageButton
+                android:id="@+id/country_favorite"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="4dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/love_names"
+                android:padding="4dp"
+                android:src="@drawable/ic_heart_outline"
+                android:tint="@color/onSurfaceVariant" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_toEndOf="@id/country_image_frame"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/spacing_s">
+
+            <TextView
+                android:id="@+id/country_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Text.Title"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/country_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textAppearance="@style/Text.Body"
+                android:textColor="@color/onSurfaceVariant" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
