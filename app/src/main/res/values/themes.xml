@@ -30,4 +30,9 @@
         <item name="android:textColor">@color/onSurfaceVariant</item>
         <item name="android:textSize">@dimen/text_caption</item>
     </style>
+    <style name="Text">
+        <item name="android:textColor">@color/onSurface</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
 </resources>
