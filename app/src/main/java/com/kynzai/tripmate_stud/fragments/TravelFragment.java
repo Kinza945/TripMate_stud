@@ -8,60 +8,64 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.kynzai.tripmate_stud.adapters.AdapterListTravels;
-import com.kynzai.tripmate_stud.adapters.TravelItem;
+import com.kynzai.tripmate_stud.databinding.FragmentTravelBinding;
+import com.kynzai.tripmate_stud.presentation.adapter.TripAdapter;
+import com.kynzai.tripmate_stud.presentation.viewmodel.AuthViewModel;
+import com.kynzai.tripmate_stud.presentation.viewmodel.TripViewModel;
 import com.kynzai.tripmate_stud.R;
+import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.ArrayList;
+public class TravelFragment extends Fragment implements TripAdapter.TripInteractionListener {
 
-
-public class TravelFragment extends Fragment {
-
-    RecyclerView recyclesLos;
-
+    private FragmentTravelBinding binding;
+    private TripViewModel tripViewModel;
+    private AuthViewModel authViewModel;
+    private TripAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_travel, container, false);
-
-        recyclesLos = view.findViewById(R.id.recycle);
-
-          ArrayList<TravelItem> travelItemList = new ArrayList<>();
-
-          TravelItem a = new TravelItem(
-          0, "Village", "30, Oxford Street Cambridge losdf 32",
-                  3.1f, false, true, "loadOne");
-
-          TravelItem b = new TravelItem(
-                1, "Прогулка", "Всеволожские проспект, 15Б ",
-                5.0f, true, false, "loadTwo");
-
-
-          travelItemList.add(a);
-          travelItemList.add(b);
-
-       // RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-//
-
-       // recyclesLos.setLayoutManager(new LinearLayoutManager(lp));
-       // recyclesLos.setLayoutParams(lp);
-        AdapterListTravels adapter = new AdapterListTravels(travelItemList);
-        recyclesLos.setAdapter(adapter);
-        recyclesLos.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setAutoMeasureEnabled(false);
-        recyclesLos.setLayoutManager(llm);
-
-        return view;
-
-        // return super.onCreateView(inflater, container, savedInstanceState);
-
+        binding = FragmentTravelBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
+        authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
+        adapter = new TripAdapter(this);
+        binding.tripList.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.tripList.setAdapter(adapter);
+
+        tripViewModel.getTrips().observe(getViewLifecycleOwner(), adapter::submit);
+        authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
+            boolean signedIn = user != null;
+            adapter.setActionsEnabled(signedIn);
+            binding.addTripCard.setVisibility(signedIn ? View.VISIBLE : View.GONE);
+            binding.guestHint.setVisibility(signedIn ? View.GONE : View.VISIBLE);
+        });
+
+        binding.openAddTripButton.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_travel_to_addTrip));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    @Override
+    public void onFavorite(String id) {
+        tripViewModel.toggleFavorite(id);
+    }
+
+    @Override
+    public void onRemove(String id) {
+        tripViewModel.removeTrip(id);
+    }
 }

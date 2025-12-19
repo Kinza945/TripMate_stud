@@ -25,12 +25,9 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(getWindow().getDecorView(), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(v.getPaddingLeft(),
-                    v.getPaddingTop(),
-                    v.getPaddingRight(),
-                    v.getPaddingBottom() ); // - systemInsets.bottom); // subtract the insets from the bottom padding
+            v.setPadding(systemInsets.left, systemInsets.top, systemInsets.right, systemInsets.bottom);
             return insets;
         });
 
@@ -38,5 +35,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.fragment_container_view_tag);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
+    }
+
+    public void selectTab(int itemId) {
+        if (bottomNavigationView != null) {
+            bottomNavigationView.setSelectedItemId(itemId);
+        }
     }
 }
