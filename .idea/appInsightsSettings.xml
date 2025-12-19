@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.kynzai.tripmate_stud" />
+                  <option name="mobileSdkAppId" value="1:227089834132:android:2aeac74e6808116d449481" />
+                  <option name="projectId" value="tripmatestud" />
+                  <option name="projectNumber" value="227089834132" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
