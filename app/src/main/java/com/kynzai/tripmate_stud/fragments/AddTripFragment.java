@@ -38,8 +38,6 @@ public class AddTripFragment extends Fragment {
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
 
-        binding.backButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
-
         binding.saveTripButton.setOnClickListener(v -> {
             if (authViewModel.getCurrentUser().getValue() == null) {
                 Toast.makeText(requireContext(), "Авторизуйтесь, чтобы создавать поездки", Toast.LENGTH_SHORT).show();
