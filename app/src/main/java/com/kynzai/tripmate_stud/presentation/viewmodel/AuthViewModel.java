@@ -23,6 +23,14 @@ public class AuthViewModel extends AndroidViewModel {
         return repository.getCurrentUser();
     }
 
+    public LiveData<String> getAuthMessage() {
+        return repository.getAuthMessage();
+    }
+
+    public LiveData<String> getAuthError() {
+        return repository.getAuthError();
+    }
+
     public void login(String email, String password) {
         repository.login(email, password);
     }
@@ -33,5 +41,13 @@ public class AuthViewModel extends AndroidViewModel {
 
     public void logout() {
         repository.logout();
+    }
+
+    public void clearAuthMessage() {
+        repository.clearAuthMessage();
+    }
+
+    public void clearAuthError() {
+        repository.clearAuthError();
     }
 }

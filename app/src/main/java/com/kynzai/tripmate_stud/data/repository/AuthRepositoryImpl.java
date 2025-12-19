@@ -11,6 +11,8 @@ import com.kynzai.tripmate_stud.domain.repository.AuthRepository;
 public class AuthRepositoryImpl implements AuthRepository {
     private final FirebaseAuth auth;
     private final MutableLiveData<UserProfile> currentUser = new MutableLiveData<>();
+    private final MutableLiveData<String> authMessage = new MutableLiveData<>();
+    private final MutableLiveData<String> authError = new MutableLiveData<>();
     private final FirebaseAuth.AuthStateListener authStateListener;
 
     public AuthRepositoryImpl() {
@@ -26,18 +28,53 @@ public class AuthRepositoryImpl implements AuthRepository {
     }
 
     @Override
+    public LiveData<String> getAuthMessage() {
+        return authMessage;
+    }
+
+    @Override
+    public LiveData<String> getAuthError() {
+        return authError;
+    }
+
+    @Override
     public void register(String email, String password) {
-        auth.createUserWithEmailAndPassword(email, password);
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        authMessage.postValue("Регистрация успешна");
+                    } else {
+                        authError.postValue(resolveError(task.getException()));
+                    }
+                });
     }
 
     @Override
     public void login(String email, String password) {
-        auth.signInWithEmailAndPassword(email, password);
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        authMessage.postValue("Вход выполнен");
+                    } else {
+                        authError.postValue(resolveError(task.getException()));
+                    }
+                });
     }
 
     @Override
     public void logout() {
         auth.signOut();
+        authMessage.postValue("Выход выполнен");
+    }
+
+    @Override
+    public void clearAuthMessage() {
+        authMessage.postValue(null);
+    }
+
+    @Override
+    public void clearAuthError() {
+        authError.postValue(null);
     }
 
     private UserProfile mapUser(FirebaseUser user) {
@@ -50,5 +87,12 @@ public class AuthRepositoryImpl implements AuthRepository {
             displayName = "Пользователь";
         }
         return new UserProfile(email, displayName);
+    }
+
+    private String resolveError(Exception exception) {
+        if (exception == null || exception.getMessage() == null || exception.getMessage().isEmpty()) {
+            return "Ошибка авторизации";
+        }
+        return exception.getMessage();
     }
 }

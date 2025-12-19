@@ -56,6 +56,20 @@ public class ProfileFragment extends Fragment {
                 binding.authBlock.setVisibility(View.GONE);
             }
         });
+
+        authViewModel.getAuthMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+                authViewModel.clearAuthMessage();
+            }
+        });
+
+        authViewModel.getAuthError().observe(getViewLifecycleOwner(), error -> {
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                authViewModel.clearAuthError();
+            }
+        });
     }
 
     private void performAuth(boolean register) {
