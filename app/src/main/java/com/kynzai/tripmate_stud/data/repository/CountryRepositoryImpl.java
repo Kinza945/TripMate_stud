@@ -30,11 +30,6 @@ public class CountryRepositoryImpl implements CountryRepository {
 
     private final MutableLiveData<List<Country>> countries = new MutableLiveData<>(Collections.emptyList());
     private final MutableLiveData<CurrencyInfo> currencyInfo = new MutableLiveData<>();
-    private static final String CURRENCY_BASE_URL = "https://v6.exchangerate-api.com/";
-    private static final String CURRENCY_API_KEY = "c74a3c7ba642e16979d8529d";
-    private static final String CURRENCY_BASE = "USD";
-    private static final String CURRENCY_TARGET = "EUR";
-
     private final CurrencyApiService currencyService;
     private final MockApiService mockApiService;
 
@@ -53,7 +48,7 @@ public class CountryRepositoryImpl implements CountryRepository {
         mockApiService = mockRetrofit.create(MockApiService.class);
 
         Retrofit currencyRetrofit = new Retrofit.Builder()
-                .baseUrl(CURRENCY_BASE_URL)
+                .baseUrl("https://open.er-api.com/v6/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
@@ -92,13 +87,13 @@ public class CountryRepositoryImpl implements CountryRepository {
     }
 
     private void fetchCurrency() {
-        currencyService.getLatestRates(CURRENCY_API_KEY, CURRENCY_BASE).enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
+        currencyService.getLatestRates("USD", "EUR,JPY").enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
             @Override
             public void onResponse(Call<CurrencyApiService.CurrencyResponse> call, Response<CurrencyApiService.CurrencyResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().conversion_rates != null) {
-                    Double eur = response.body().conversion_rates.get(CURRENCY_TARGET);
+                if (response.isSuccessful() && response.body() != null && response.body().rates != null) {
+                    Double eur = response.body().rates.get("EUR");
                     if (eur != null) {
-                        currencyInfo.postValue(new CurrencyInfo(response.body().base_code, CURRENCY_TARGET, eur));
+                        currencyInfo.postValue(new CurrencyInfo(response.body().base, "EUR", eur));
                     }
                 }
             }

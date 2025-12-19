@@ -10,16 +10,6 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_m">
 
-        <ImageButton
-            android:id="@+id/detail_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@color/surface"
-            android:contentDescription="@string/profile_names"
-            android:src="@android:drawable/ic_media_previous"
-            android:tint="@color/onSurface"
-            android:padding="8dp" />
-
         <ImageView
             android:id="@+id/detail_image"
             android:layout_width="match_parent"

@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.kynzai.tripmate_stud.databinding.FragmentCountryDetailBinding;
@@ -32,7 +31,6 @@ public class CountryDetailFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         countryViewModel = new ViewModelProvider(requireActivity()).get(CountryViewModel.class);
-        binding.detailBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
         String countryId = getArguments() != null ? getArguments().getString("countryId") : null;
         if (countryId != null) {
             countryViewModel.getCountryById(countryId).observe(getViewLifecycleOwner(), country -> {

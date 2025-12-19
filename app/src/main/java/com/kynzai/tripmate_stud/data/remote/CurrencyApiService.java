@@ -1,15 +1,17 @@
 package com.kynzai.tripmate_stud.data.remote;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface CurrencyApiService {
-    @GET("v6/{apiKey}/latest/{base}")
-    Call<CurrencyResponse> getLatestRates(@Path("apiKey") String apiKey, @Path("base") String base);
+    @GET("latest")
+    Call<CurrencyResponse> getLatestRates(@Query("base") String base, @Query("symbols") String symbols);
 
     class CurrencyResponse {
-        public String base_code;
-        public java.util.Map<String, Double> conversion_rates;
+        public String base;
+        public Map<String, Double> rates;
     }
 }

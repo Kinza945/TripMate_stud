@@ -11,31 +11,12 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_m">
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageButton
-                android:id="@+id/add_trip_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@color/surface"
-                android:contentDescription="@string/profile_names"
-                android:src="@android:drawable/ic_media_previous"
-                android:tint="@color/onSurface"
-                android:padding="8dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/spacing_s"
-                android:text="Новая поездка"
-                style="@style/Text.Title"
-                android:gravity="start" />
-        </LinearLayout>
+            android:text="Новая поездка"
+            style="@style/Text.Title"
+            android:gravity="start" />
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
