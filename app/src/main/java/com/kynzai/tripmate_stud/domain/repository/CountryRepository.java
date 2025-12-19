@@ -11,4 +11,6 @@ public interface CountryRepository {
     LiveData<List<Country>> getCountries();
     LiveData<Country> getCountryById(String id);
     LiveData<CurrencyInfo> getCurrencyInfo();
+    LiveData<java.util.Set<String>> getFavoriteCountryIds();
+    void toggleFavoriteCountry(String id);
 }

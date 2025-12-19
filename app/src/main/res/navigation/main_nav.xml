@@ -29,13 +29,20 @@
         <action
             android:id="@+id/action_travel_to_addTrip"
             app:destination="@id/addTrip" />
+        <action
+            android:id="@+id/action_travel_to_editTrip"
+            app:destination="@id/editTrip" />
     </fragment>
 
     <fragment
         android:id="@+id/profile"
         android:name="com.kynzai.tripmate_stud.fragments.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragmentprofile" />
+        tools:layout="@layout/fragmentprofile" >
+        <action
+            android:id="@+id/action_profile_to_addTrip"
+            app:destination="@id/addTrip" />
+    </fragment>
 
     <fragment
         android:id="@+id/countryDetail"
@@ -48,4 +55,10 @@
         android:name="com.kynzai.tripmate_stud.fragments.AddTripFragment"
         android:label="AddTrip"
         tools:layout="@layout/fragment_add_trip" />
+
+    <fragment
+        android:id="@+id/editTrip"
+        android:name="com.kynzai.tripmate_stud.fragments.EditTripFragment"
+        android:label="EditTrip"
+        tools:layout="@layout/fragment_edit_trip" />
 </navigation>

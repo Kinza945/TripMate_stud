@@ -194,7 +194,7 @@ public class TripRepositoryImpl implements TripRepository {
                         String title = firstNonEmpty(item.name, item.title);
                         String location = firstNonEmpty(item.countryName, item.location);
                         boolean isFavorite = favoriteIds.contains(item.id);
-                        mapped.add(new Trip(item.id, title, safe(item.description), safe(item.imageUrl), location, isFavorite));
+                        mapped.add(new Trip(item.id, title, safe(item.description), safe(item.imageUrl), location, null, isFavorite));
                     }
                     baseTrips.clear();
                     baseTrips.addAll(mapped);
@@ -222,10 +222,10 @@ public class TripRepositoryImpl implements TripRepository {
 
     private void updateCombinedTrips() {
         Map<String, Trip> merged = new LinkedHashMap<>();
-        for (Trip trip : baseTrips) {
+        for (Trip trip : firestoreTrips) {
             merged.put(trip.getId(), applyFavorite(trip));
         }
-        for (Trip trip : firestoreTrips) {
+        for (Trip trip : baseTrips) {
             merged.put(trip.getId(), applyFavorite(trip));
         }
         List<Trip> combined = new ArrayList<>(merged.values());
@@ -262,6 +262,7 @@ public class TripRepositoryImpl implements TripRepository {
             tripsRegistration.remove();
         }
         tripsRegistration = firestore.collection("trips")
+                .orderBy("createdAt", com.google.firebase.firestore.Query.Direction.DESCENDING)
                 .addSnapshotListener((snapshot, error) -> {
                     if (snapshot == null || error != null) {
                         return;
@@ -274,7 +275,8 @@ public class TripRepositoryImpl implements TripRepository {
                         String imageUrl = safe(doc.getString("imageUrl"));
                         String location = safe(doc.getString("location"));
                         boolean favorite = favoriteIds.contains(id);
-                        firestoreTrips.add(new Trip(id, title, description, imageUrl, location, favorite));
+                        String ownerUid = safe(doc.getString("ownerUid"));
+                        firestoreTrips.add(new Trip(id, title, description, imageUrl, location, ownerUid, favorite));
                     });
                     updateCombinedTrips();
                 });

@@ -43,6 +43,7 @@ public class LoveFragment extends Fragment implements TripAdapter.TripInteractio
         authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
             boolean signedIn = user != null;
             adapter.setActionsEnabled(signedIn);
+            adapter.setCurrentUserId(user == null ? null : user.getUid());
             binding.guestHint.setVisibility(signedIn ? View.GONE : View.VISIBLE);
         });
     }
@@ -61,5 +62,10 @@ public class LoveFragment extends Fragment implements TripAdapter.TripInteractio
     @Override
     public void onRemove(String id) {
         tripViewModel.removeTrip(id);
+    }
+
+    @Override
+    public void onEdit(com.kynzai.tripmate_stud.domain.model.Trip trip) {
+        // Editing favorites list is disabled; trip edit is available in "Мои поездки".
     }
 }

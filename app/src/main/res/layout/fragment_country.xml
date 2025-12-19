@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
+    android:fitsSystemWindows="true"
     android:padding="@dimen/spacing_m">
 
     <TextView
@@ -60,5 +61,5 @@
         android:layout_marginTop="@dimen/spacing_m"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/spacing_m" />
+        android:paddingBottom="96dp" />
 </LinearLayout>

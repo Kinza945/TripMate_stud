@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.kynzai.tripmate_stud.MainActivity;
 import com.kynzai.tripmate_stud.R;
@@ -45,6 +46,13 @@ public class ProfileFragment extends Fragment {
                 ((MainActivity) requireActivity()).selectTab(R.id.travel);
             }
         });
+        binding.favoriteTripsButton.setOnClickListener(v -> {
+            if (requireActivity() instanceof MainActivity) {
+                ((MainActivity) requireActivity()).selectTab(R.id.love);
+            }
+        });
+        binding.addTripButton.setOnClickListener(v ->
+                NavHostFragment.findNavController(this).navigate(R.id.action_profile_to_addTrip));
 
         authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
             if (user == null) {

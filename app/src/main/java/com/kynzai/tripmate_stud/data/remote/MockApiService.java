@@ -20,6 +20,7 @@ public interface MockApiService {
         public String currency;
         public String temperature;
         public String imageUrl;
+        public String type;
     }
 
     class TripResponse {

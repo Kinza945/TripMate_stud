@@ -8,14 +8,16 @@ public class Trip {
     private final String description;
     private final String imageUrl;
     private final String location;
+    private final String ownerUid;
     private final boolean favorite;
 
-    public Trip(String id, String title, String description, String imageUrl, String location, boolean favorite) {
+    public Trip(String id, String title, String description, String imageUrl, String location, String ownerUid, boolean favorite) {
         this.id = id == null ? UUID.randomUUID().toString() : id;
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
         this.location = location;
+        this.ownerUid = ownerUid;
         this.favorite = favorite;
     }
 
@@ -39,11 +41,15 @@ public class Trip {
         return location;
     }
 
+    public String getOwnerUid() {
+        return ownerUid;
+    }
+
     public boolean isFavorite() {
         return favorite;
     }
 
     public Trip toggleFavorite() {
-        return new Trip(id, title, description, imageUrl, location, !favorite);
+        return new Trip(id, title, description, imageUrl, location, ownerUid, !favorite);
     }
 }

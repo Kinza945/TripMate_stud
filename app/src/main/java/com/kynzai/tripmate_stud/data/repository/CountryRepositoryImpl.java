@@ -10,10 +10,15 @@ import com.kynzai.tripmate_stud.data.remote.CurrencyApiService;
 import com.kynzai.tripmate_stud.domain.model.Country;
 import com.kynzai.tripmate_stud.domain.model.CurrencyInfo;
 import com.kynzai.tripmate_stud.domain.repository.CountryRepository;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -27,11 +32,18 @@ import com.kynzai.tripmate_stud.data.remote.MockApiService;
 public class CountryRepositoryImpl implements CountryRepository {
 
     private static final String MOCK_BASE_URL = "https://694461477dd335f4c3602a64.mockapi.io/TripMate_studapi/";
+    private static final String CURRENCY_BASE_URL = "https://v6.exchangerate-api.com/";
+    private static final String CURRENCY_API_KEY = "c74a3c7ba642e16979d8529d";
+    private static final String CURRENCY_TARGET = "EUR";
 
     private final MutableLiveData<List<Country>> countries = new MutableLiveData<>(Collections.emptyList());
     private final MutableLiveData<CurrencyInfo> currencyInfo = new MutableLiveData<>();
+    private final MutableLiveData<Set<String>> favoriteCountryIds = new MutableLiveData<>(new HashSet<>());
     private final CurrencyApiService currencyService;
     private final MockApiService mockApiService;
+    private final FirebaseAuth auth;
+    private final FirebaseFirestore firestore;
+    private ListenerRegistration favoritesRegistration;
 
     public CountryRepositoryImpl() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -48,14 +60,18 @@ public class CountryRepositoryImpl implements CountryRepository {
         mockApiService = mockRetrofit.create(MockApiService.class);
 
         Retrofit currencyRetrofit = new Retrofit.Builder()
-                .baseUrl("https://open.er-api.com/v6/")
+                .baseUrl(CURRENCY_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
         currencyService = currencyRetrofit.create(CurrencyApiService.class);
+        auth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+        auth.addAuthStateListener(firebaseAuth -> listenFavorites());
 
         loadCountries();
         fetchCurrency();
+        listenFavorites();
     }
 
     private void loadCountries() {
@@ -72,7 +88,8 @@ public class CountryRepositoryImpl implements CountryRepository {
                                 safe(item.imageUrl),
                                 safe(item.capital),
                                 safe(item.currency),
-                                safe(item.temperature)
+                                safe(item.temperature),
+                                safe(item.type)
                         ));
                     }
                     countries.postValue(mapped);
@@ -87,13 +104,13 @@ public class CountryRepositoryImpl implements CountryRepository {
     }
 
     private void fetchCurrency() {
-        currencyService.getLatestRates("USD", "EUR,JPY").enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
+        currencyService.getLatestRates(CURRENCY_API_KEY, "USD").enqueue(new Callback<CurrencyApiService.CurrencyResponse>() {
             @Override
             public void onResponse(Call<CurrencyApiService.CurrencyResponse> call, Response<CurrencyApiService.CurrencyResponse> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().rates != null) {
-                    Double eur = response.body().rates.get("EUR");
-                    if (eur != null) {
-                        currencyInfo.postValue(new CurrencyInfo(response.body().base, "EUR", eur));
+                if (response.isSuccessful() && response.body() != null && response.body().conversion_rates != null) {
+                    Double target = response.body().conversion_rates.get(CURRENCY_TARGET);
+                    if (target != null) {
+                        currencyInfo.postValue(new CurrencyInfo(response.body().base_code, CURRENCY_TARGET, target));
                     }
                 }
             }
@@ -132,5 +149,56 @@ public class CountryRepositoryImpl implements CountryRepository {
     @Override
     public LiveData<CurrencyInfo> getCurrencyInfo() {
         return currencyInfo;
+    }
+
+    @Override
+    public LiveData<Set<String>> getFavoriteCountryIds() {
+        return favoriteCountryIds;
+    }
+
+    @Override
+    public void toggleFavoriteCountry(String id) {
+        if (auth.getCurrentUser() == null || id == null) {
+            return;
+        }
+        String uid = auth.getCurrentUser().getUid();
+        Set<String> current = favoriteCountryIds.getValue();
+        if (current != null && current.contains(id)) {
+            firestore.collection("users")
+                    .document(uid)
+                    .collection("favoriteCountries")
+                    .document(id)
+                    .delete();
+        } else {
+            java.util.Map<String, Object> data = new java.util.HashMap<>();
+            data.put("createdAt", com.google.firebase.firestore.FieldValue.serverTimestamp());
+            firestore.collection("users")
+                    .document(uid)
+                    .collection("favoriteCountries")
+                    .document(id)
+                    .set(data);
+        }
+    }
+
+    private void listenFavorites() {
+        if (favoritesRegistration != null) {
+            favoritesRegistration.remove();
+        }
+        if (auth.getCurrentUser() == null) {
+            favoriteCountryIds.postValue(new HashSet<>());
+            return;
+        }
+        String uid = auth.getCurrentUser().getUid();
+        favoritesRegistration = firestore.collection("users")
+                .document(uid)
+                .collection("favoriteCountries")
+                .addSnapshotListener((snapshot, error) -> {
+                    if (snapshot == null || error != null) {
+                        return;
+                    }
+                    Set<String> ids = new HashSet<>();
+                    snapshot.getDocuments().forEach(doc -> ids.add(doc.getId()));
+                    favoriteCountryIds.postValue(ids);
+                });
     }
 }

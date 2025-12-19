@@ -25,15 +25,26 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(getWindow().getDecorView(), (v, insets) -> {
             Insets systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemInsets.left, systemInsets.top, systemInsets.right, systemInsets.bottom);
+            v.setPadding(v.getPaddingLeft(),
+                    v.getPaddingTop(),
+                    v.getPaddingRight(),
+                    v.getPaddingBottom() ); // - systemInsets.bottom); // subtract the insets from the bottom padding
             return insets;
         });
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         NavController navController = Navigation.findNavController(MainActivity.this, R.id.fragment_container_view_tag);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!navController.popBackStack()) {
+                    finish();
+                }
+            }
+        });
 
     }
 
@@ -41,5 +52,11 @@ public class MainActivity extends AppCompatActivity {
         if (bottomNavigationView != null) {
             bottomNavigationView.setSelectedItemId(itemId);
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.fragment_container_view_tag);
+        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 }

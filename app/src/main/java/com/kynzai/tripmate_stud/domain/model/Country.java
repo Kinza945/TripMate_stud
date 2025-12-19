@@ -10,8 +10,9 @@ public class Country implements Serializable {
     private final String capital;
     private final String currency;
     private final String temperature;
+    private final String type;
 
-    public Country(String id, String name, String description, String imageUrl, String capital, String currency, String temperature) {
+    public Country(String id, String name, String description, String imageUrl, String capital, String currency, String temperature, String type) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -19,6 +20,7 @@ public class Country implements Serializable {
         this.capital = capital;
         this.currency = currency;
         this.temperature = temperature;
+        this.type = type;
     }
 
     public String getId() {
@@ -47,5 +49,9 @@ public class Country implements Serializable {
 
     public String getTemperature() {
         return temperature;
+    }
+
+    public String getType() {
+        return type;
     }
 }

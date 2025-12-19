@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.kynzai.tripmate_stud.databinding.FragmentCountryDetailBinding;
@@ -47,6 +48,7 @@ public class CountryDetailFragment extends Fragment {
                 binding.detailRateValue.setText(text);
             }
         });
+        binding.backButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
     }
 
     private void bindCountry(@NonNull Country country) {

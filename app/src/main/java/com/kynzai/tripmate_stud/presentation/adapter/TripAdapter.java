@@ -22,11 +22,13 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
     public interface TripInteractionListener {
         void onFavorite(String id);
         void onRemove(String id);
+        void onEdit(Trip trip);
     }
 
     private List<Trip> trips = new ArrayList<>();
     private final TripInteractionListener listener;
     private boolean actionsEnabled = true;
+    private String currentUserId;
 
     public TripAdapter(TripInteractionListener listener) {
         this.listener = listener;
@@ -39,6 +41,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
 
     public void setActionsEnabled(boolean enabled) {
         actionsEnabled = enabled;
+        notifyDataSetChanged();
+    }
+
+    public void setCurrentUserId(String userId) {
+        currentUserId = userId;
         notifyDataSetChanged();
     }
 
@@ -57,8 +64,11 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         holder.favorite.setImageResource(trip.isFavorite() ? R.drawable.star_two : R.drawable.star_one);
         holder.favorite.setOnClickListener(v -> listener.onFavorite(trip.getId()));
         holder.remove.setOnClickListener(v -> listener.onRemove(trip.getId()));
+        boolean canEdit = actionsEnabled && currentUserId != null && currentUserId.equals(trip.getOwnerUid());
         holder.favorite.setVisibility(actionsEnabled ? View.VISIBLE : View.GONE);
-        holder.remove.setVisibility(actionsEnabled ? View.VISIBLE : View.GONE);
+        holder.remove.setVisibility(canEdit ? View.VISIBLE : View.GONE);
+        holder.edit.setVisibility(canEdit ? View.VISIBLE : View.GONE);
+        holder.edit.setOnClickListener(v -> listener.onEdit(trip));
         Glide.with(holder.image.getContext())
                 .load(trip.getImageUrl())
                 .placeholder(R.drawable.ic_launcher_foreground)
@@ -76,6 +86,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
         TextView subtitle;
         ImageButton favorite;
         ImageButton remove;
+        ImageButton edit;
 
         TripHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +95,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripHolder> {
             subtitle = itemView.findViewById(R.id.trip_subtitle);
             favorite = itemView.findViewById(R.id.trip_favorite);
             remove = itemView.findViewById(R.id.trip_remove);
+            edit = itemView.findViewById(R.id.trip_edit);
         }
     }
 }

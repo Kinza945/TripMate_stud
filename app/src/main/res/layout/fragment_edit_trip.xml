@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Новая поездка"
+            android:text="Редактировать поездку"
             style="@style/Text.Title"
             android:gravity="start" />
 

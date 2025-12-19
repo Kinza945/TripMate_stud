@@ -45,6 +45,7 @@ public class TravelFragment extends Fragment implements TripAdapter.TripInteract
         authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
             boolean signedIn = user != null;
             adapter.setActionsEnabled(signedIn);
+            adapter.setCurrentUserId(user == null ? null : user.getUid());
             binding.addTripCard.setVisibility(signedIn ? View.VISIBLE : View.GONE);
             binding.guestHint.setVisibility(signedIn ? View.GONE : View.VISIBLE);
         });
@@ -67,5 +68,12 @@ public class TravelFragment extends Fragment implements TripAdapter.TripInteract
     @Override
     public void onRemove(String id) {
         tripViewModel.removeTrip(id);
+    }
+
+    @Override
+    public void onEdit(com.kynzai.tripmate_stud.domain.model.Trip trip) {
+        Bundle args = new Bundle();
+        args.putString("tripId", trip.getId());
+        NavHostFragment.findNavController(this).navigate(R.id.action_travel_to_editTrip, args);
     }
 }

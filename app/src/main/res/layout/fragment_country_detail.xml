@@ -11,13 +11,29 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_m">
 
-        <ImageView
-            android:id="@+id/detail_image"
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/profile_names"
+            android:src="@android:drawable/ic_media_previous"
+            android:tint="@color/onSurface" />
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:contentDescription="@string/country_names"
-            android:scaleType="centerCrop"
-            android:background="@color/divider" />
+            app:cardCornerRadius="@dimen/card_corner"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/divider">
+
+            <ImageView
+                android:id="@+id/detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/country_names"
+                android:scaleType="centerCrop" />
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/detail_name"
