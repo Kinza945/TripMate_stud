@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_xs"
             android:layout_weight="1"
-            android:text="Пляжный отдых"
+            android:text="Пляжи"
             app:cornerRadius="@dimen/card_corner_small" />
 
         <com.google.android.material.button.MaterialButton
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_xs"
             android:layout_weight="1"
-            android:text="Городской ритм"
+            android:text="Города"
             app:cornerRadius="@dimen/card_corner_small" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
