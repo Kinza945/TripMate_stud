@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="background">#FAFAFA</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="primary">#2F80ED</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSurface">#1A1A1A</color>
+    <color name="onSurfaceVariant">#666666</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="cardMuted">#E0E0E0</color>
+    <color name="cardMutedDark">#CFCFCF</color>
 </resources>
