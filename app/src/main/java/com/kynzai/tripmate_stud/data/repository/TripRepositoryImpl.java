@@ -7,6 +7,7 @@ import com.kynzai.tripmate_stud.data.remote.MockApiService;
 import com.kynzai.tripmate_stud.domain.model.Trip;
 import com.kynzai.tripmate_stud.domain.repository.TripRepository;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
@@ -73,9 +74,8 @@ public class TripRepositoryImpl implements TripRepository {
             return;
         }
         String uid = auth.getCurrentUser().getUid();
-        tripsRegistration = firestore.collection("users")
-                .document(uid)
-                .collection("trips")
+        tripsRegistration = firestore.collection("trips")
+                .whereEqualTo("ownerUid", uid)
                 .addSnapshotListener((snapshot, error) -> {
                     if (snapshot == null || error != null) {
                         return;
@@ -126,9 +126,9 @@ public class TripRepositoryImpl implements TripRepository {
         data.put("description", trip.getDescription());
         data.put("imageUrl", trip.getImageUrl());
         data.put("location", trip.getLocation());
-        firestore.collection("users")
-                .document(uid)
-                .collection("trips")
+        data.put("ownerUid", uid);
+        data.put("createdAt", FieldValue.serverTimestamp());
+        firestore.collection("trips")
                 .document(trip.getId())
                 .set(data);
     }
@@ -147,7 +147,7 @@ public class TripRepositoryImpl implements TripRepository {
                     .delete();
         } else {
             Map<String, Object> data = new LinkedHashMap<>();
-            data.put("createdAt", System.currentTimeMillis());
+            data.put("createdAt", FieldValue.serverTimestamp());
             firestore.collection("users")
                     .document(uid)
                     .collection("favorites")
@@ -162,9 +162,7 @@ public class TripRepositoryImpl implements TripRepository {
             return;
         }
         String uid = auth.getCurrentUser().getUid();
-        firestore.collection("users")
-                .document(uid)
-                .collection("trips")
+        firestore.collection("trips")
                 .document(id)
                 .delete();
         firestore.collection("users")
