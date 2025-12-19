@@ -6,16 +6,19 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kynzai.tripmate_stud.domain.model.UserProfile;
-import com.kynzai.tripmate_stud.domain.repository.AuthRepository;
+import com.kynzai.tripmate_stud.domain.repository.ProfileRepository;
+import com.kynzai.tripmate_stud.domain.repository.UserRepository;
 
-public class AuthRepositoryImpl implements AuthRepository {
+public class UserRepositoryImpl implements UserRepository {
     private final FirebaseAuth auth;
+    private final ProfileRepository profileRepository;
     private final MutableLiveData<UserProfile> currentUser = new MutableLiveData<>();
     private final MutableLiveData<String> authMessage = new MutableLiveData<>();
     private final MutableLiveData<String> authError = new MutableLiveData<>();
     private final FirebaseAuth.AuthStateListener authStateListener;
 
-    public AuthRepositoryImpl() {
+    public UserRepositoryImpl(ProfileRepository profileRepository) {
+        this.profileRepository = profileRepository;
         auth = FirebaseAuth.getInstance();
         authStateListener = firebaseAuth -> currentUser.postValue(mapUser(firebaseAuth.getCurrentUser()));
         auth.addAuthStateListener(authStateListener);
@@ -41,7 +44,9 @@ public class AuthRepositoryImpl implements AuthRepository {
     public void register(String email, String password) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
+                    if (task.isSuccessful() && auth.getCurrentUser() != null) {
+                        FirebaseUser user = auth.getCurrentUser();
+                        profileRepository.createUserProfile(user.getUid(), email, user.getDisplayName());
                         authMessage.postValue("Регистрация успешна");
                     } else {
                         authError.postValue(resolveError(task.getException()));

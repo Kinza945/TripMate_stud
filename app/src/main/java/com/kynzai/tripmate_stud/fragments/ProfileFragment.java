@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.kynzai.tripmate_stud.MainActivity;
 import com.kynzai.tripmate_stud.R;
 import com.kynzai.tripmate_stud.databinding.FragmentprofileBinding;
@@ -50,8 +51,20 @@ public class ProfileFragment extends Fragment {
                 binding.logoutButton.setVisibility(View.GONE);
                 binding.authBlock.setVisibility(View.VISIBLE);
             } else {
-                binding.profileTitle.setText(user.getDisplayName());
-                binding.profileEmail.setText(user.getEmail());
+                String uid = FirebaseAuth.getInstance().getCurrentUser() == null
+                        ? null
+                        : FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if (uid != null) {
+                    authViewModel.getUserById(uid).observe(getViewLifecycleOwner(), profile -> {
+                        if (profile != null) {
+                            binding.profileTitle.setText(profile.getDisplayName());
+                            binding.profileEmail.setText(profile.getEmail());
+                        }
+                    });
+                } else {
+                    binding.profileTitle.setText(user.getDisplayName());
+                    binding.profileEmail.setText(user.getEmail());
+                }
                 binding.logoutButton.setVisibility(View.VISIBLE);
                 binding.authBlock.setVisibility(View.GONE);
             }

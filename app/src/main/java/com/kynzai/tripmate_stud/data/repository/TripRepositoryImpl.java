@@ -7,8 +7,10 @@ import com.kynzai.tripmate_stud.data.remote.MockApiService;
 import com.kynzai.tripmate_stud.domain.model.Trip;
 import com.kynzai.tripmate_stud.domain.repository.TripRepository;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,9 +75,9 @@ public class TripRepositoryImpl implements TripRepository {
             return;
         }
         String uid = auth.getCurrentUser().getUid();
-        tripsRegistration = firestore.collection("users")
-                .document(uid)
-                .collection("trips")
+        tripsRegistration = firestore.collection("trips")
+                .whereEqualTo("ownerUid", uid)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
                 .addSnapshotListener((snapshot, error) -> {
                     if (snapshot == null || error != null) {
                         return;
@@ -116,6 +118,23 @@ public class TripRepositoryImpl implements TripRepository {
     }
 
     @Override
+    public LiveData<Trip> getTripById(String id) {
+        MutableLiveData<Trip> result = new MutableLiveData<>();
+        trips.observeForever(list -> {
+            if (list == null) {
+                return;
+            }
+            for (Trip trip : list) {
+                if (trip.getId().equals(id)) {
+                    result.postValue(trip);
+                    return;
+                }
+            }
+        });
+        return result;
+    }
+
+    @Override
     public void addTrip(Trip trip) {
         if (auth.getCurrentUser() == null) {
             return;
@@ -126,11 +145,28 @@ public class TripRepositoryImpl implements TripRepository {
         data.put("description", trip.getDescription());
         data.put("imageUrl", trip.getImageUrl());
         data.put("location", trip.getLocation());
-        firestore.collection("users")
-                .document(uid)
-                .collection("trips")
+        data.put("ownerUid", uid);
+        data.put("createdAt", FieldValue.serverTimestamp());
+        firestore.collection("trips")
                 .document(trip.getId())
                 .set(data);
+    }
+
+    @Override
+    public void editTrip(Trip trip) {
+        if (auth.getCurrentUser() == null) {
+            return;
+        }
+        String uid = auth.getCurrentUser().getUid();
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("title", trip.getTitle());
+        data.put("description", trip.getDescription());
+        data.put("imageUrl", trip.getImageUrl());
+        data.put("location", trip.getLocation());
+        data.put("ownerUid", uid);
+        firestore.collection("trips")
+                .document(trip.getId())
+                .update(data);
     }
 
     @Override
@@ -147,7 +183,7 @@ public class TripRepositoryImpl implements TripRepository {
                     .delete();
         } else {
             Map<String, Object> data = new LinkedHashMap<>();
-            data.put("createdAt", System.currentTimeMillis());
+            data.put("createdAt", FieldValue.serverTimestamp());
             firestore.collection("users")
                     .document(uid)
                     .collection("favorites")
@@ -162,9 +198,7 @@ public class TripRepositoryImpl implements TripRepository {
             return;
         }
         String uid = auth.getCurrentUser().getUid();
-        firestore.collection("users")
-                .document(uid)
-                .collection("trips")
+        firestore.collection("trips")
                 .document(id)
                 .delete();
         firestore.collection("users")
@@ -181,8 +215,8 @@ public class TripRepositoryImpl implements TripRepository {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Trip> mapped = new ArrayList<>();
                     for (MockApiService.TripResponse item : response.body()) {
-                        String title = firstNonEmpty(item.title, item.name);
-                        String location = firstNonEmpty(item.location, item.capital);
+                        String title = safe(item.name);
+                        String location = safe(item.countryName);
                         boolean isFavorite = favoriteIds.contains(item.id);
                         mapped.add(new Trip(item.id, title, safe(item.description), safe(item.imageUrl), location, isFavorite));
                     }
@@ -201,13 +235,6 @@ public class TripRepositoryImpl implements TripRepository {
 
     private String safe(String value) {
         return value == null ? "" : value;
-    }
-
-    private String firstNonEmpty(String primary, String fallback) {
-        if (primary != null && !primary.isEmpty()) {
-            return primary;
-        }
-        return fallback == null ? "" : fallback;
     }
 
     private void updateCombinedTrips() {

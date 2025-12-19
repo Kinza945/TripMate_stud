@@ -1,6 +1,7 @@
 package com.kynzai.tripmate_stud.fragments;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,25 +12,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.kynzai.tripmate_stud.R;
-import com.kynzai.tripmate_stud.databinding.FragmentTravelBinding;
-import com.kynzai.tripmate_stud.presentation.adapter.TripAdapter;
+import com.kynzai.tripmate_stud.databinding.FragmentAddTripBinding;
+import com.kynzai.tripmate_stud.domain.model.Trip;
 import com.kynzai.tripmate_stud.presentation.viewmodel.AuthViewModel;
 import com.kynzai.tripmate_stud.presentation.viewmodel.TripViewModel;
 
-public class TravelFragment extends Fragment implements TripAdapter.TripInteractionListener {
+public class AddTripFragment extends Fragment {
 
-    private FragmentTravelBinding binding;
+    private FragmentAddTripBinding binding;
     private TripViewModel tripViewModel;
     private AuthViewModel authViewModel;
-    private TripAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentTravelBinding.inflate(inflater, container, false);
+        binding = FragmentAddTripBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -38,24 +36,24 @@ public class TravelFragment extends Fragment implements TripAdapter.TripInteract
         super.onViewCreated(view, savedInstanceState);
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
         authViewModel = new ViewModelProvider(requireActivity()).get(AuthViewModel.class);
-        adapter = new TripAdapter(this);
-        binding.tripList.setLayoutManager(new LinearLayoutManager(requireContext()));
-        binding.tripList.setAdapter(adapter);
 
-        tripViewModel.getTrips().observe(getViewLifecycleOwner(), adapter::submit);
-        authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
-            boolean signedIn = user != null;
-            adapter.setActionsEnabled(signedIn);
-            binding.addTripCard.setVisibility(signedIn ? View.VISIBLE : View.GONE);
-            binding.guestHint.setVisibility(signedIn ? View.GONE : View.VISIBLE);
-        });
-
-        binding.addTripButton.setOnClickListener(v -> {
+        binding.saveTripButton.setOnClickListener(v -> {
             if (authViewModel.getCurrentUser().getValue() == null) {
                 Toast.makeText(requireContext(), "Авторизуйтесь, чтобы сохранять поездки", Toast.LENGTH_SHORT).show();
                 return;
             }
-            NavHostFragment.findNavController(this).navigate(R.id.action_travel_to_addTrip);
+            String title = binding.tripTitleInput.getText() == null ? "" : binding.tripTitleInput.getText().toString();
+            String location = binding.tripLocationInput.getText() == null ? "" : binding.tripLocationInput.getText().toString();
+            String desc = binding.tripDescInput.getText() == null ? "" : binding.tripDescInput.getText().toString();
+            String image = binding.tripImageInput.getText() == null ? "" : binding.tripImageInput.getText().toString();
+            if (TextUtils.isEmpty(title) || TextUtils.isEmpty(location)) {
+                Toast.makeText(requireContext(), "Заполните название и локацию", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Trip trip = new Trip(null, title, desc, image, location, false);
+            tripViewModel.addTrip(trip);
+            Toast.makeText(requireContext(), "Поездка добавлена", Toast.LENGTH_SHORT).show();
+            NavHostFragment.findNavController(this).navigateUp();
         });
     }
 
@@ -63,15 +61,5 @@ public class TravelFragment extends Fragment implements TripAdapter.TripInteract
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    @Override
-    public void onFavorite(String id) {
-        tripViewModel.toggleFavorite(id);
-    }
-
-    @Override
-    public void onRemove(String id) {
-        tripViewModel.removeTrip(id);
     }
 }

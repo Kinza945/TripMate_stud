@@ -52,7 +52,7 @@ public class CountryFragment extends Fragment implements CountryAdapter.CountryC
     @Override
     public void onCountryClicked(Country country) {
         Bundle args = new Bundle();
-        args.putSerializable("country", country);
+        args.putString("country_id", country.getId());
         NavHostFragment.findNavController(this).navigate(R.id.action_country_to_countryDetail, args);
     }
 }

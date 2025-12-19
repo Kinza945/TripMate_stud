@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 
 import com.kynzai.tripmate_stud.domain.model.UserProfile;
 
-public interface AuthRepository {
+public interface UserRepository {
     LiveData<UserProfile> getCurrentUser();
     LiveData<String> getAuthMessage();
     LiveData<String> getAuthError();

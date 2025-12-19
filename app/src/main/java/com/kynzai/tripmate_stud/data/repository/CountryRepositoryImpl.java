@@ -117,4 +117,32 @@ public class CountryRepositoryImpl implements CountryRepository {
     public LiveData<CurrencyInfo> getCurrencyInfo() {
         return currencyInfo;
     }
+
+    @Override
+    public LiveData<Country> getCountryById(String id) {
+        MutableLiveData<Country> result = new MutableLiveData<>();
+        mockApiService.getCountryById(id).enqueue(new Callback<MockApiService.CountryResponse>() {
+            @Override
+            public void onResponse(Call<MockApiService.CountryResponse> call, Response<MockApiService.CountryResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    MockApiService.CountryResponse item = response.body();
+                    result.postValue(new Country(
+                            item.id,
+                            safe(item.name),
+                            safe(item.description),
+                            safe(item.imageUrl),
+                            safe(item.capital),
+                            safe(item.currency),
+                            safe(item.temperature)
+                    ));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MockApiService.CountryResponse> call, Throwable t) {
+                Log.e("CountryRepository", "Country detail failed", t);
+            }
+        });
+        return result;
+    }
 }

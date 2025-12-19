@@ -10,4 +10,5 @@ import java.util.List;
 public interface CountryRepository {
     LiveData<List<Country>> getCountries();
     LiveData<CurrencyInfo> getCurrencyInfo();
+    LiveData<Country> getCountryById(String id);
 }

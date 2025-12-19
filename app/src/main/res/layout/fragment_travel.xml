@@ -39,53 +39,13 @@
                     android:textAppearance="@style/Text.Body"
                     android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Название">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_title_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Локация">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_location_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Описание">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_desc_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:hint="Ссылка на изображение">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/trip_image_input"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:text="Создайте свою поездку с названием, локацией и фото."
+                    android:textAppearance="@style/Text.Caption"
+                    android:textColor="@color/onSurfaceVariant" />
 
                 <Button
                     android:id="@+id/add_trip_button"
@@ -93,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_s"
                     android:backgroundTint="@color/primary"
-                    android:text="Сохранить"
+                    android:text="Добавить"
                     android:textColor="@color/onPrimary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

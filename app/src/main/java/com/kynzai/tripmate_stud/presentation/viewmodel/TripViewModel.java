@@ -9,35 +9,64 @@ import androidx.lifecycle.LiveData;
 import com.kynzai.tripmate_stud.data.repository.TripRepositoryImpl;
 import com.kynzai.tripmate_stud.domain.model.Trip;
 import com.kynzai.tripmate_stud.domain.repository.TripRepository;
+import com.kynzai.tripmate_stud.domain.usecase.AddTripUseCase;
+import com.kynzai.tripmate_stud.domain.usecase.EditTripUseCase;
+import com.kynzai.tripmate_stud.domain.usecase.GetFavoriteTripsUseCase;
+import com.kynzai.tripmate_stud.domain.usecase.GetTripByIdUseCase;
+import com.kynzai.tripmate_stud.domain.usecase.GetTripsUseCase;
+import com.kynzai.tripmate_stud.domain.usecase.RemoveTripUseCase;
+import com.kynzai.tripmate_stud.domain.usecase.ToggleFavoriteUseCase;
 
 import java.util.List;
 
 public class TripViewModel extends AndroidViewModel {
 
     private final TripRepository repository;
+    private final GetTripsUseCase getTripsUseCase;
+    private final GetFavoriteTripsUseCase getFavoriteTripsUseCase;
+    private final GetTripByIdUseCase getTripByIdUseCase;
+    private final AddTripUseCase addTripUseCase;
+    private final EditTripUseCase editTripUseCase;
+    private final ToggleFavoriteUseCase toggleFavoriteUseCase;
+    private final RemoveTripUseCase removeTripUseCase;
 
     public TripViewModel(@NonNull Application application) {
         super(application);
         repository = new TripRepositoryImpl();
+        getTripsUseCase = new GetTripsUseCase(repository);
+        getFavoriteTripsUseCase = new GetFavoriteTripsUseCase(repository);
+        getTripByIdUseCase = new GetTripByIdUseCase(repository);
+        addTripUseCase = new AddTripUseCase(repository);
+        editTripUseCase = new EditTripUseCase(repository);
+        toggleFavoriteUseCase = new ToggleFavoriteUseCase(repository);
+        removeTripUseCase = new RemoveTripUseCase(repository);
     }
 
     public LiveData<List<Trip>> getTrips() {
-        return repository.getTrips();
+        return getTripsUseCase.execute();
     }
 
     public LiveData<List<Trip>> getFavoriteTrips() {
-        return repository.getFavoriteTrips();
+        return getFavoriteTripsUseCase.execute();
+    }
+
+    public LiveData<Trip> getTripById(String id) {
+        return getTripByIdUseCase.execute(id);
     }
 
     public void addTrip(Trip trip) {
-        repository.addTrip(trip);
+        addTripUseCase.execute(trip);
+    }
+
+    public void editTrip(Trip trip) {
+        editTripUseCase.execute(trip);
     }
 
     public void toggleFavorite(String id) {
-        repository.toggleFavorite(id);
+        toggleFavoriteUseCase.execute(id);
     }
 
     public void removeTrip(String id) {
-        repository.removeTrip(id);
+        removeTripUseCase.execute(id);
     }
 }

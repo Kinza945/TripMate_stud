@@ -32,9 +32,13 @@ public class CountryDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         countryViewModel = new ViewModelProvider(requireActivity()).get(CountryViewModel.class);
         if (getArguments() != null) {
-            Country country = (Country) getArguments().getSerializable("country");
-            if (country != null) {
-                bindCountry(country);
+            String countryId = getArguments().getString("country_id");
+            if (countryId != null) {
+                countryViewModel.getCountryById(countryId).observe(getViewLifecycleOwner(), country -> {
+                    if (country != null) {
+                        bindCountry(country);
+                    }
+                });
             }
         }
         countryViewModel.getCurrencyInfo().observe(getViewLifecycleOwner(), info -> {
